@@ -37,15 +37,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    #3rd party
-    'rest_framework',
-    'django_extensions',
-
-    #app specific
-    'apps.account.apps.AccountConfig',
-    'apps.core.apps.CoreConfig',
-    'apps.catalogue.apps.CatalogueConfig'
+    # 3rd party
+    "rest_framework",
+    "django_extensions",
+    # app specific
+    "apps.account.apps.AccountConfig",
+    "apps.core.apps.CoreConfig",
+    "apps.catalogue.apps.CatalogueConfig",
+    "apps.blog.apps.BlogConfig",
 ]
 
 MIDDLEWARE = [
@@ -54,6 +53,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    # "django.contrib.auth.middleware.LoginRequiredMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -63,7 +63,7 @@ ROOT_URLCONF = "config.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / 'templates'],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -125,9 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "static/"
-STATICFILES_DIR = [
-    BASE_DIR / 'static'
-]
+STATICFILES_DIR = [BASE_DIR / "static"]
 STATIC_ROOT = "staticfiles"
 
 # Default primary key field type
@@ -135,7 +133,22 @@ STATIC_ROOT = "staticfiles"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Account Settings
 
-#Account Settings
+AUTH_USER_MODEL = "account.User"
 
-AUTH_USER_MODEL = 'account.User'
+# Restframework Settings
+
+REST_FRAMEWORK = {
+    """
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly"
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.SessionAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+    ],
+    """
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 10,
+}

@@ -1,0 +1,13 @@
+GET http://localhost:8000/api/posts/ 
+
+### 
+POST http://localhost:8000/api/posts/ HTTP/1.1
+content-type : application/json 
+//Authorization: Basic c2J1bHV0Z2VuYzpTczcyMDY1ODQq 
+
+{
+    "title":"new post 10",
+    "content":"post content",
+    "owner":1
+}
+

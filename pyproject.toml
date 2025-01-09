@@ -1,0 +1,5 @@
+[tool.isort]
+profile = "django"
+
+[tool.black]
+line-length = 90
