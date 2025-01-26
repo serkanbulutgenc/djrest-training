@@ -23,24 +23,6 @@ class GroupFactory(DjangoModelFactory):
 
 
 @mute_signals(post_save)
-class UserFactory(DjangoModelFactory):
-
-    class Meta:
-        model = get_user_model()
-
-    username = factory.Faker("user_name")  # F.simple_profile().get("username")
-    email = factory.Faker("email")  # F.simple_profile().get("mail")
-    is_staff = True
-
-    @factory.post_generation
-    def password(obj, create, extracted, **kwargs):
-        if not create:
-            return
-        # print("obj", obj, type(obj))
-        obj.set_password("7745283")
-
-
-@mute_signals(post_save)
 class PostFactory(DjangoModelFactory):
     class Meta:
         model = Post
@@ -81,6 +63,27 @@ class PostFactory(DjangoModelFactory):
 
 
 @mute_signals(post_save)
+class UserFactory(DjangoModelFactory):
+
+    class Meta:
+        model = get_user_model()
+
+    username = factory.Faker("user_name")  # F.simple_profile().get("username")
+    email = factory.Faker("email")  # F.simple_profile().get("mail")
+    is_staff = True
+    posts = factory.RelatedFactoryList(
+        PostFactory, factory_related_name="owner", size=lambda: random.randint(5, 30)
+    )
+
+    @factory.post_generation
+    def password(obj, create, extracted, **kwargs):
+        if not create:
+            return
+        # print("obj", obj, type(obj))
+        obj.set_password("7745283")
+
+
+@mute_signals(post_save)
 class CategoryFactory(DjangoModelFactory):
     class Meta:
         model = Category
@@ -88,9 +91,6 @@ class CategoryFactory(DjangoModelFactory):
 
     title = factory.LazyAttribute(lambda o: " ".join(F.words(nb=1, unique=True)))
     meta_title = factory.Faker("text", max_nb_chars=100)
-    posts = factory.RelatedFactoryList(
-        PostFactory, factory_related_name="category", size=lambda: random.randint(5, 30)
-    )
 
     @factory.lazy_attribute
     def slug(self):

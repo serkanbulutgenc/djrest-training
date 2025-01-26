@@ -60,14 +60,14 @@ class Command(BaseCommand):
 
         tags = TagFactory.create_batch(tag_count)
 
-        user_cycle = cycle(users)
+        category_cycle = cycle(categories)
 
         print(f"{len(tags)} tags have been created.")
 
         posts = Post.objects.all()
 
         for post in posts:
-            post.owner = next(user_cycle)
+            post.category = next(category_cycle)
             post.tags.add(*random.choices(tags, k=3))
 
         Post.objects.bulk_update(posts, ["owner"])
