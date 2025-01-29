@@ -16,8 +16,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from apps.blog.api.serializers import PostSerializer, PostSummarySerializer
-from apps.blog.models import Post
+from apps.blog.api.serializers import (
+    CategorySerializer,
+    PostSerializer,
+    PostSummarySerializer,
+)
+from apps.blog.models import Category, Post
 
 
 @api_view(["GET"])
@@ -81,3 +85,10 @@ class PostsViewSet(ModelViewSet):
         serializer = PostSerializer(recent_posts, many=True)
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+
+class CategoryViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    pagination_class = None
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
