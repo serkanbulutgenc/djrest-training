@@ -1,4 +1,4 @@
-from http import HTTPMethod
+# from http import HTTPMethod
 
 from django.shortcuts import get_list_or_404
 from django.utils.text import slugify
@@ -79,7 +79,7 @@ class PostsViewSet(ModelViewSet):
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
 
-    @action(detail=False, methods=[HTTPMethod.GET])
+    @action(detail=False, methods=["GET"])
     def recent(self, request):
         recent_posts = Post.objects.order_by("-published_at")[:2]
         serializer = PostSerializer(recent_posts, many=True)
