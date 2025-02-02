@@ -1,7 +1,6 @@
 from django.utils.timezone import now
 from rest_framework import serializers
 
-
 from apps.blog.models import Category, Post, get_user_model
 
 
@@ -14,7 +13,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class PostSummarySerializer(serializers.ModelSerializer):
-    category = serializers.StringRelatedField()
     tags = serializers.StringRelatedField(many=True)
     # owner = serializers.StringRelatedField()
 

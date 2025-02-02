@@ -6,8 +6,9 @@ content-type : application/json
 //Authorization: Basic c2J1bHV0Z2VuYzpTczcyMDY1ODQq 
 
 {
-    "title":"new post 10",
+    "title":"new post 1000",
     "content":"post content",
+    "category":367,
     "owner":1
 }
 
