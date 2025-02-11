@@ -19,6 +19,7 @@ router.register("products", ProductViewSet, basename="product")
 router.register("posts", PostsViewSet, basename="post")
 router.register("categories", CategoryViewSet, basename="category")
 
-urlpatterns = []
+
+urlpatterns = [path("auth/", include("apps.account.api.urls"), name="account-urls")]
 
 urlpatterns += router.urls

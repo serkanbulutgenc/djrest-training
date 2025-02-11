@@ -12,3 +12,25 @@ content-type : application/json
     "owner":1
 }
 
+### 
+POST http://localhost:8000/api/auth/signin HTTP/1.1
+content-type : application/json  
+
+{
+    "username":"jenniferfisher",
+    "password":"7745283"
+} 
+
+### 
+GET http://localhost:8000/api/auth/signout HTTP/1.1
+content-type : application/json  
+
+### 
+POST https://jsonplaceholder.typicode.com/users HTTP/1.1
+content-type : application/json  
+
+{
+    "username":"sbulutgenc",
+    "password":"Ss7206584*"
+}
+
