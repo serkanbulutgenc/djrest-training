@@ -20,6 +20,8 @@ router.register("posts", PostsViewSet, basename="post")
 router.register("categories", CategoryViewSet, basename="category")
 
 
-urlpatterns = [path("auth/", include("apps.account.api.urls"), name="account-urls")]
+urlpatterns = [
+    path("auth/", include("allauth.headless.urls")),
+]
 
 urlpatterns += router.urls

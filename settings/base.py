@@ -38,11 +38,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # 3rd party
+    "allauth",
+    "allauth.account",
+    "allauth.headless",
     "rest_framework",
     "django_extensions",
     "corsheaders",
     # app specific
-    "apps.account.apps.AccountConfig",
+    # "apps.account.apps.AccountConfig",
     "apps.core.apps.CoreConfig",
     "apps.catalogue.apps.CatalogueConfig",
     "apps.blog.apps.BlogConfig",
@@ -58,6 +61,8 @@ MIDDLEWARE = [
     # "django.contrib.auth.middleware.LoginRequiredMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # Add the account middleware:
+    "allauth.account.middleware.AccountMiddleware",
 ]
 
 ROOT_URLCONF = "config.urls"
@@ -135,9 +140,6 @@ STATIC_ROOT = "staticfiles"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Account Settings
-
-AUTH_USER_MODEL = "account.User"
 
 # Restframework Settings
 
@@ -145,3 +147,19 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
     "PAGE_SIZE": 10,
 }
+
+# Account Settings
+
+# AUTH_USER_MODEL = "account.User" #No needed for django-allauth
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    "django.contrib.auth.backends.ModelBackend",
+    # `allauth` specific authentication methods, such as login by email
+    "allauth.account.auth_backends.AuthenticationBackend",
+]
+ACCOUNT_USERNAME_MIN_LENGTH = 3
+ACCOUNT_EMAIL_VERIFICATION = "none"  # optional | mandatory
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_LOGIN_METHODS = {"username", "email"}
+HEADLESS_ONLY = True
